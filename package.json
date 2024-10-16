@@ -5,6 +5,10 @@
   "description": "Visualizes the file structure of the current project in a VS Code workspace.",
   "publisher": "lohChanHin",
   "main": "src/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lohchanhin/project_structure.git"
+  },
   "scripts": {
     "vsce:package": "vsce package",
     "vsce:publish": "vsce publish"
@@ -24,7 +28,10 @@
       "properties": {
         "projectStructure.excludedFolders": {
           "type": "array",
-          "default": ["node_modules", ".git"],
+          "default": [
+            "node_modules",
+            ".git"
+          ],
           "description": "List of directories to exclude from the project structure view."
         }
       }
