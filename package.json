@@ -1,0 +1,48 @@
+{
+  "name": "projectstructure",
+  "displayName": "Project Structure Visualizer",
+  "version": "1.0.0",
+  "description": "Visualizes the file structure of the current project in a VS Code workspace.",
+  "publisher": "lohChanHin",
+  "main": "src/extension.js",
+  "scripts": {
+    "vsce:package": "vsce package",
+    "vsce:publish": "vsce publish"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.showProjectStructure",
+        "title": "Show Project Structure"
+      }
+    ],
+    "configuration": {
+      "title": "Project Structure",
+      "properties": {
+        "projectStructure.excludedFolders": {
+          "type": "array",
+          "default": ["node_modules", ".git"],
+          "description": "List of directories to exclude from the project structure view."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "typescript": "^4.5.4",
+    "vsce": "^2.5.3"
+  },
+  "license": "ISC",
+  "keywords": [
+    "VS Code",
+    "project",
+    "structure",
+    "visualizer"
+  ],
+  "dependencies": {
+    "nvm": "^0.0.4"
+  }
+}

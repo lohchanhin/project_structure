@@ -1,0 +1,39 @@
+/* style.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--vscode-editor-foreground);
+    background-color: var(--vscode-editor-background);
+    padding: 15px;
+    overflow: auto;  /* 确保在需要时可以滚动 */
+}
+
+.folder {
+    cursor: pointer;
+    margin: 5px 0;  /* Add some spacing */
+}
+
+.folder > ul {
+    display: none; /* 默认状态为折叠 */
+}
+
+.folder > ul.visible {
+    display: block; /* 展开时显示 */
+}
+
+button {
+    color: var(--vscode-button-foreground);
+    background-color: var(--vscode-button-background);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
