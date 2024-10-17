@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
-const { getDirectoryStructure } = require('./utils/fileScanner');
+const { getDirectoryStructure } = require('./utils/fileScanner2');
 const { generateHtml } = require('./utils/generateHtml');
 
 function activate(context) {

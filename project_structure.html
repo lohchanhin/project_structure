@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Structure</title>
+    <link href="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            overflow: auto;
+        }
+        .mermaid {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: scroll;
+            width: 100%;
+            height: auto;
+        }
+        .mermaid path {
+            stroke-width: 2px;
+            stroke: #333;
+        }
+        .mermaid path:hover {
+            stroke-width: 3px;
+            stroke: #ff4757; /* Red highlight color */
+        }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+        graph TD;
+        node0(".gitignore")
+node1[".vscode"]
+node1 --> node2
+node2("lauch.json")
+node1 --> node3
+node3("tasks.json")
+node4("LICENSE.md")
+node5["media"]
+node5 --> node6
+node6["script.js ()"]
+node5 --> node7
+node7("style.css")
+node8("output.html")
+node9("package-lock.json")
+node10("package.json")
+node11("projectstructure-1.0.0.vsix")
+node12("project_structure.html")
+node13("Readme.md")
+node14["src"]
+node14 --> node15
+node15["extension.js (activate, deactivate)"]
+node15 --> func_16_activate
+func_16_activate["activate"]
+func_16_activate --> func_17_getDirectoryStructure
+node15 --> func_18_deactivate
+func_18_deactivate["deactivate"]
+node14 --> node19
+node19["utils"]
+node19 --> node20
+node20["fileScanner.js (parseFunctions, readDir, getDirectoryStructure)"]
+node20 --> func_21_parseFunctions
+func_21_parseFunctions["parseFunctions"]
+node20 --> func_22_readDir
+func_22_readDir["readDir"]
+func_22_readDir --> func_24_parseFunctions
+node20 --> func_25_getDirectoryStructure
+func_25_getDirectoryStructure["getDirectoryStructure"]
+node19 --> node26
+node26["fileScanner2.js (parseFunctions, readDir, getDirectoryStructure)"]
+node26 --> func_27_parseFunctions
+func_27_parseFunctions["parseFunctions"]
+node26 --> func_28_readDir
+func_28_readDir["readDir"]
+node26 --> func_30_getDirectoryStructure
+func_30_getDirectoryStructure["getDirectoryStructure"]
+node19 --> node31
+node31["generateHtml.js (createMermaidChart, generateHtml)"]
+node31 --> func_32_createMermaidChart
+func_32_createMermaidChart["createMermaidChart"]
+node31 --> func_34_generateHtml
+func_34_generateHtml["generateHtml"]
+node35["test.js ()"]
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+            },
+            zoom: {
+                enabled: true,
+            }
+        });
+    </script>
+</body>
+</html>
+    

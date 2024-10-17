@@ -50,6 +50,8 @@
     "visualizer"
   ],
   "dependencies": {
+    "acorn": "^8.13.0",
+    "acorn-walk": "^8.3.4",
     "nvm": "^0.0.4"
   }
 }
