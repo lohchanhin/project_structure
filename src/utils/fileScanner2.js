@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const acorn = require('acorn');
-const walk = require('acorn-walk');  // 引入 acorn-walk
-const vscode = require('vscode');
+const acornWalk = require('acorn-walk');
 
-function parseFunctions(content) {
+function parseFunctions(content, filePath) {
     try {
         const ast = acorn.parse(content, { ecmaVersion: 2020, sourceType: 'module' });
         const functions = {};
@@ -52,25 +51,20 @@ function parseFunctions(content) {
 }
 
 
-function getDirectoryStructure(dirPath) {
-    const excludedFolders = vscode.workspace.getConfiguration('projectStructure').get('excludedFolders', []);
+function getDirectoryStructure(dirPath, excludedFolders = ['node_modules', '.git', 'test']) {
     const structure = {};
 
     function readDir(currentPath, obj) {
         fs.readdirSync(currentPath, { withFileTypes: true }).forEach(dirent => {
             if (dirent.isDirectory()) {
-                if (excludedFolders.includes(dirent.name)) {
-                    return;
+                if (!excludedFolders.includes(dirent.name)) {
+                    obj[dirent.name] = {};
+                    readDir(path.join(currentPath, dirent.name), obj[dirent.name]);
                 }
-                obj[dirent.name] = {};
-                readDir(path.join(currentPath, dirent.name), obj[dirent.name]);
+            } else if (dirent.name.endsWith('.js')) {
+                obj[dirent.name] = parseFunctions(fs.readFileSync(path.join(currentPath, dirent.name), 'utf-8'), path.join(currentPath, dirent.name));
             } else {
-                if (dirent.name.endsWith('.js') || dirent.name.endsWith('.ts')) {
-                    const content = fs.readFileSync(path.join(currentPath, dirent.name), 'utf-8');
-                    obj[dirent.name] = parseFunctions(content);
-                } else {
-                    obj[dirent.name] = 'file';
-                }
+                obj[dirent.name] = 'file';
             }
         });
     }

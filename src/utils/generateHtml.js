@@ -1,24 +1,52 @@
-function generateHtml(structure) {
-    let nodeId = 0; // Node ID counter to ensure unique nodes
+const fs = require('fs');
+const path = require('path');
 
-    function createMermaidChart(obj, parentId) {
+function generateHtml(structure) {    
+
+    let globalNodeId = 0;  // Initialize a global node ID counter
+
+    function createMermaidChart(obj, parentId, pathMap) {
         let mermaid = '';
+    
         for (const key in obj) {
-            const currentId = `node${nodeId++}`; // Generate a unique ID for the current node
+            const currentId = `node${globalNodeId++}`;
+            pathMap[key] = currentId;  // Store current node ID with its key
             if (parentId) {
-                mermaid += `${parentId} --> ${currentId}\n`; // Connect parent node to current node
+                mermaid += `${parentId} --> ${currentId}\n`;
             }
-            if (typeof obj[key] === 'object' && Object.keys(obj[key]).length > 0) {
-                mermaid += `${currentId}[${key}]\n`;
-                mermaid += createMermaidChart(obj[key], currentId);
+            
+            if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+                if (key.endsWith('.js') && obj[key].functions) {
+                    let functionList = Object.keys(obj[key].functions).join(', ');
+                    mermaid += `${currentId}["${key} (${functionList})"]\n`;
+                    for (const funcName in obj[key].functions) {
+                        const funcDetails = obj[key].functions[funcName];
+                        const funcId = `func_${globalNodeId++}_${funcName.replace(/[^a-zA-Z0-9_]/g, '')}`;
+                        mermaid += `${currentId} --> ${funcId}\n`;
+                        mermaid += `${funcId}["${funcName}"]\n`;
+                        funcDetails.calls.forEach(calledFunc => {
+                            const calledFuncId = pathMap[calledFunc] || `func_${globalNodeId++}_${calledFunc.replace(/[^a-zA-Z0-9_]/g, '')}`;
+                            if (calledFunc !== funcName) {  // Ensure no self-calling links
+                                mermaid += `${funcId} --> ${calledFuncId}\n`;
+                            }
+                        });
+                    }
+                } else {
+                    mermaid += `${currentId}["${key}"]\n`;
+                    mermaid += createMermaidChart(obj[key], currentId, pathMap);
+                }
             } else {
-                mermaid += `${currentId}("${key}")\n`;
+                mermaid += `${currentId}("${key}")\n`;  // Handle non-JS files or other content
             }
         }
+    
         return mermaid;
-    }
-
-    const chartContent = createMermaidChart(structure);
+    }   
+       
+    
+    let pathMap = {};
+    let mermaidDiagram = createMermaidChart(structure, null, pathMap);
+    
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -44,23 +72,31 @@ function generateHtml(structure) {
             width: 100%;
             height: auto;
         }
+        .mermaid path {
+            stroke-width: 2px;
+            stroke: #333;
+        }
+        .mermaid path:hover {
+            stroke-width: 3px;
+            stroke: #ff4757; /* Red highlight color */
+        }
     </style>
 </head>
 <body>
     <div class="mermaid">
         graph TD;
-        ${chartContent}
+        ${mermaidDiagram}
     </div>
     <script>
         mermaid.initialize({
             startOnLoad: true,
-            securityLevel: 'loose', // Allow HTML in node descriptions
+            securityLevel: 'loose',
             flowchart: {
-                useMaxWidth: false, // Allows the diagram to take full width
-                htmlLabels: true, // Allows HTML in labels
+                useMaxWidth: false,
+                htmlLabels: true,
             },
             zoom: {
-                enabled: true, // Enable zooming
+                enabled: true,
             }
         });
     </script>
