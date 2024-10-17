@@ -65,29 +65,36 @@ func_18_deactivate["deactivate"]
 node14 --> node19
 node19["utils"]
 node19 --> node20
-node20["fileScanner.js (parseFunctions, readDir, getDirectoryStructure)"]
-node20 --> func_21_parseFunctions
-func_21_parseFunctions["parseFunctions"]
-node20 --> func_22_readDir
-func_22_readDir["readDir"]
-func_22_readDir --> func_24_parseFunctions
-node20 --> func_25_getDirectoryStructure
-func_25_getDirectoryStructure["getDirectoryStructure"]
-node19 --> node26
-node26["fileScanner2.js (parseFunctions, readDir, getDirectoryStructure)"]
-node26 --> func_27_parseFunctions
-func_27_parseFunctions["parseFunctions"]
-node26 --> func_28_readDir
-func_28_readDir["readDir"]
-node26 --> func_30_getDirectoryStructure
-func_30_getDirectoryStructure["getDirectoryStructure"]
-node19 --> node31
-node31["generateHtml.js (createMermaidChart, generateHtml)"]
-node31 --> func_32_createMermaidChart
-func_32_createMermaidChart["createMermaidChart"]
-node31 --> func_34_generateHtml
-func_34_generateHtml["generateHtml"]
-node35["test.js ()"]
+node20["fileScanner.js (parseJavaScript, visit, parseTypeScript, parseFunctions, readDir, getDirectoryStructure)"]
+node20 --> func_21_parseJavaScript
+func_21_parseJavaScript["parseJavaScript"]
+node20 --> func_22_visit
+func_22_visit["visit"]
+node20 --> func_23_parseTypeScript
+func_23_parseTypeScript["parseTypeScript"]
+func_23_parseTypeScript --> func_24_visit
+node20 --> func_25_parseFunctions
+func_25_parseFunctions["parseFunctions"]
+func_25_parseFunctions --> func_26_parseJavaScript
+node20 --> func_27_readDir
+func_27_readDir["readDir"]
+node20 --> func_29_getDirectoryStructure
+func_29_getDirectoryStructure["getDirectoryStructure"]
+node19 --> node30
+node30["fileScanner2.js (parseFunctions, readDir, getDirectoryStructure)"]
+node30 --> func_31_parseFunctions
+func_31_parseFunctions["parseFunctions"]
+node30 --> func_32_readDir
+func_32_readDir["readDir"]
+node30 --> func_34_getDirectoryStructure
+func_34_getDirectoryStructure["getDirectoryStructure"]
+node19 --> node35
+node35["generateHtml.js (createMermaidChart, generateHtml)"]
+node35 --> func_36_createMermaidChart
+func_36_createMermaidChart["createMermaidChart"]
+node35 --> func_38_generateHtml
+func_38_generateHtml["generateHtml"]
+node39["test.js ()"]
 
     </div>
     <script>
